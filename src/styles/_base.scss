@@ -4,6 +4,7 @@
   --font-montserrat-semibold: 'Montserrat SemiBold', sans-serif;
   --font-montserrat-bold: 'Montserrat Bold', sans-serif;
 
+  --brown: #8C6B67;
   --white: #fff;
   --dark: #191919;
   --error: #dc3545;
@@ -13,4 +14,8 @@
 * {
   font-family: var(--font-montserrat-regular);
   color: var(--dark);
+}
+
+body {
+  background-color: #f8f8f8;
 }
