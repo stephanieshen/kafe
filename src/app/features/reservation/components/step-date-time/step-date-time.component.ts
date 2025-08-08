@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { StepperModule } from 'primeng/stepper';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-step-date-time',
-  imports: [ButtonModule, StepperModule],
+  imports: [ButtonModule, DatePickerModule, ReactiveFormsModule],
   templateUrl: './step-date-time.component.html',
   styleUrl: './step-date-time.component.scss'
 })
 export class StepDateTimeComponent {
-
+  @Input() form!: FormGroup;
 }

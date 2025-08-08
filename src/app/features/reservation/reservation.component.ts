@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
 
 import { Components } from './components';
-import { Step } from './models/step.model';
 
 @Component({
   selector: 'app-reservation',
@@ -15,32 +15,50 @@ import { Step } from './models/step.model';
     ButtonModule,
     CardModule,
     CommonModule,
+    ReactiveFormsModule,
     StepperModule
   ],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss'
 })
-export class ReservationComponent {
-  steps: Step[] = [
-    {
-      value: 1,
-      title: 'Choose Date & Time'
-    },
-    {
-      value: 2,
-      title: 'Party Size & Preferences'
-    },
-    {
-      value: 3,
-      title: 'Region Selection'
-    },
-    {
-      value: 4,
-      title: 'Contact Details'
-    },
-    {
-      value: 5,
-      title: 'Review and Confirm'
-    }
-  ]
+export class ReservationComponent implements OnInit {
+  reservationForm!: FormGroup;
+  steps: string[] = []
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.steps = this.getSteps();
+    this.initReservationForm();
+  }
+
+  submit(): void {
+    console.log(this.reservationForm.value);
+  }
+
+  private initReservationForm(): void {
+    this.reservationForm = this.formBuilder.group({
+      date: [null, Validators.required],
+      time: [null, Validators.required],
+      partySize: [null, [Validators.required, Validators.min(1)]],
+      region: [null, [Validators.required]],
+      childrenAllowed: [null],
+      smokingAllowed: [],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required]
+    });
+  }
+
+  private getSteps(): string[] {
+    return [
+      'Choose Date & Time',
+      'Party Size & Preferences',
+      'Region Selection',
+      'Contact Details',
+      'Review and Confirm'
+    ];
+  }
 }
