@@ -8,13 +8,3 @@
 @use 'stepper';
 @use 'typography';
 
-.p-step.p-component.p-step-active .p-step-number{
-  background-color: var(--brown);
-  font-family: var(--font-montserrat-semibold) !important;
-  color: #fff !important;
-}
-
-.p-step-number {
-  font-family: var(--font-montserrat-medium) !important;
-  color: var(--dark) !important;
-}
