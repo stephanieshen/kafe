@@ -1,0 +1,16 @@
+:root {
+  --font-montserrat-regular: 'Montserrat Regular', sans-serif;
+  --font-montserrat-medium: 'Montserrat Medium', sans-serif;
+  --font-montserrat-semibold: 'Montserrat SemiBold', sans-serif;
+  --font-montserrat-bold: 'Montserrat Bold', sans-serif;
+
+  --white: #fff;
+  --dark: #191919;
+  --error: #dc3545;
+  --success: #28a745
+}
+
+* {
+  font-family: var(--font-montserrat-regular);
+  color: var(--dark);
+}

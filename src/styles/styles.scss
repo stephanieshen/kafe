@@ -3,3 +3,6 @@
 @use "primeflex/primeflex.css";
 
 @use "tailwindcss";
+
+@use 'base' as *;
+@use 'typography' as *;
