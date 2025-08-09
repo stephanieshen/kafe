@@ -22,9 +22,9 @@
       @for (timeslot of timeslots; track timeslot.label; let i = $index) {
         <div class="date-time__timeslot">
           <p-radiobutton
-            name="time"
-            [value]="timeslot.value"
-            formControlName="time"
+            name="timeslot"
+            [value]="timeslot"
+            formControlName="timeslot"
             inputId="slot-{{ i }}"
           />
           <label for="slot-{{ i }}" class="ml-2">

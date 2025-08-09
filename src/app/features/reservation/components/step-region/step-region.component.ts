@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Region } from '../../models/region.model';
 import { DropdownModule } from 'primeng/dropdown';
+import { REGIONS } from '../../constants/regions.const';
 
 @Component({
   selector: 'app-step-region',
@@ -12,33 +13,10 @@ import { DropdownModule } from 'primeng/dropdown';
 export class StepRegionComponent implements OnInit {
   @Input() form!: FormGroup;
 
-  regions: Region[] = [];
+  regions: Region[] = REGIONS;
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.regions = this.getRegions();
-  }
-
-  private getRegions(): Region[] {
-    return [
-      {
-        id: 1,
-        label: 'Main Hall'
-      },
-      {
-        id: 2,
-        label: 'Bar'
-      },
-      {
-        id: 3,
-        label: 'Riverside'
-      },
-      {
-        id: 4,
-        label: 'Riverside (Smoking)'
-      }
-    ]
-  }
+  ngOnInit(): void {}
 
 }

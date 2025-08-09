@@ -1,0 +1,17 @@
+.review {
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 1rem 0;
+  }
+
+  &__item-label {
+    font-family: var(--font-montserrat-semibold);
+  }
+
+  &__title {
+    font-family: var(--font-montserrat-bold);
+  }
+}
