@@ -12,8 +12,7 @@ import { REGIONS } from '../../constants/regions.const';
 })
 export class StepRegionComponent implements OnInit {
   @Input() form!: FormGroup;
-
-  regions: Region[] = REGIONS;
+  @Input() suggestedRegions: Region[] = [];
 
   constructor() {}
 

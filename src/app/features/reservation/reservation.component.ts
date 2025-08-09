@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -16,7 +16,7 @@ import { Components } from './components';
 import { Step } from './models/step.model';
 import { filter, find } from 'lodash-es';
 import { STEPS } from './constants/steps.const';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Reservation } from './models/reservation.model';
 import { ReservationService } from './services/reservation.service';
 import { Timeslot } from './models/timeslot.model';
@@ -37,11 +37,14 @@ import { Region } from './models/region.model';
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss',
 })
-export class ReservationComponent implements OnInit {
+export class ReservationComponent implements OnInit, OnDestroy {
   isCompleted: boolean = false;
   reservations$!: Observable<Reservation>[];
   reservationForm!: FormGroup;
   steps: Step[] = STEPS;
+  suggestedRegions: Region[] = [];
+
+  private destroyed$ = new Subject();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +53,12 @@ export class ReservationComponent implements OnInit {
 
   ngOnInit(): void {
     this.initReservationForm();
-    this.reservationService.getReservationState$().subscribe(x => console.log('state', x))
+    this.reservationService.getsRegionsAvailability$().subscribe(x => console.log('state', x))
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next(null);
+    this.destroyed$.complete();
   }
 
   get date(): AbstractControl {
@@ -84,35 +92,17 @@ export class ReservationComponent implements OnInit {
 
   handleNextStep(nextStep: number) {
     const nextStepItem = find(this.steps, ['step', nextStep]);
-    
-    // user inputs date and time
-    // user inputs pax and preferences
-    // const suggestedRegions = check availble regions based on preferences
-    // chekc suggestedRegions availability
-
-
-    // suggestedRegions = get available regions based on prefences
-    // already have suggestedRegions
-    // storedRegions = next is to check store and filter the regions based on suggestedRegions 
-    // already have storedRegions
-    // next is to filter this storedRegions based on selected date and time
-    // already have storedRegions based on user selected date and time (and also on preferences)
-    // check if pax still availabel
 
     if (nextStepItem?.code === 'region-selection') {
-      const suggestedRegions = this.getRegionsBasedOnPreferences();
-      console.log(suggestedRegions)
+      const reservation = this.reservationForm.value;
+      this.reservationService.getSuggestedRegions$(reservation)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next: (regionsAvailability) => {
+            this.suggestedRegions = regionsAvailability.map(availability => availability.region);
+          }
+        })
     }
-  }
-
-  getRegionsBasedOnPreferences(): Region[] {
-    const isChildrenAllowed = this.chilredAllowed.value;
-    const isSmokingAllowed = this.smokingAllowed.value;
-
-    return filter(REGIONS, (region: Region) => {
-      return region.isChildrenAllowed === isChildrenAllowed &&
-             region.isSmokingAllowed === isSmokingAllowed;
-    });
   }
 
   private initReservationForm(): void {

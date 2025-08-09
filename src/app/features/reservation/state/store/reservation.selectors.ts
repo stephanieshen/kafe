@@ -1,10 +1,21 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ReservationState } from "../models/reservation-state.model";
 
-export const selectReservationsState = createFeatureSelector<ReservationState>('reservations');
+export const selectReservationsState = createFeatureSelector<ReservationState>('reservation');
 
-export const selectReservations = createSelector(
+export const selectState = createSelector(
   selectReservationsState,
   (state) => state
 );
+
+export const selectReservations = createSelector(
+  selectReservationsState,
+  (state) => state.reservations
+);
+
+export const selectRegionsAvailability = createSelector(
+  selectReservationsState,
+  (state) => state.regionAvailability
+);
+
 

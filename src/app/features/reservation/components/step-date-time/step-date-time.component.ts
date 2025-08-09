@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { Timeslot } from '../../models/timeslot.model';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { generateTimeSlots } from '../../utils/generate-time-slots.util';
 
 @Component({
   selector: 'app-step-date-time',
@@ -25,38 +26,6 @@ export class StepDateTimeComponent implements OnInit {
   timeslots: Timeslot[] = [];
 
   ngOnInit(): void {
-    this.timeslots = this.generateTimeSlots();
+    this.timeslots = generateTimeSlots();
   }
-
-  generateTimeSlots() {
-    const slots: Timeslot[] = [];
-    const startHour = 18; // 6 PM
-    const endHour = 22; // 10 PM
-
-    for (let hour = startHour; hour < endHour; hour++) {
-      slots.push({
-        label: this.formatLabel(hour, 0),
-        value: this.formatValue(hour, 0),
-      });
-      slots.push({
-        label: this.formatLabel(hour, 30),
-        value: this.formatValue(hour, 30),
-      });
-    }
-
-    return slots;
-  }
-
-  private formatLabel(hour24: number, minute: number): string {
-    const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
-    const ampm = hour24 < 12 ? 'AM' : 'PM';
-    const minStr = minute === 0 ? '00' : minute.toString();
-    return `${hour12}:${minStr} ${ampm}`;
-  }
-
-  private formatValue(hour24: number, minute: number): string {
-    const hourStr = hour24.toString().padStart(2, '0');
-    const minStr = minute === 0 ? '00' : minute.toString();
-    return `${hourStr}:${minStr}`;
-  }
-}
+ }

@@ -14,11 +14,31 @@
                   <ng-template #content let-activateCallback="activateCallback">
 
                     <ng-container [ngSwitch]="stepItem.step">
-                      <app-step-date-time *ngSwitchCase="1" [form]="reservationForm"></app-step-date-time>
-                      <app-step-size-and-preferences *ngSwitchCase="2" [form]="reservationForm"></app-step-size-and-preferences>
-                      <app-step-region *ngSwitchCase="3" [form]="reservationForm"></app-step-region>
-                      <app-step-contact *ngSwitchCase="4" [form]="reservationForm"></app-step-contact>
-                      <app-step-review *ngSwitchCase="5" [formValue]="reservationForm.value"></app-step-review>
+                      <app-step-date-time
+                        *ngSwitchCase="1"
+                        [form]="reservationForm"
+                      ></app-step-date-time>
+
+                      <app-step-size-and-preferences
+                        *ngSwitchCase="2"
+                        [form]="reservationForm"
+                      ></app-step-size-and-preferences>
+
+                      <app-step-region
+                        *ngSwitchCase="3"
+                        [form]="reservationForm"
+                        [suggestedRegions]="suggestedRegions"
+                      ></app-step-region>
+
+                      <app-step-contact
+                        *ngSwitchCase="4"
+                        [form]="reservationForm"
+                      ></app-step-contact>
+
+                      <app-step-review
+                        *ngSwitchCase="5"
+                        [formValue]="reservationForm.value"
+                      ></app-step-review>
                     </ng-container>
 
                     <div class="flex py-10 gap-2">

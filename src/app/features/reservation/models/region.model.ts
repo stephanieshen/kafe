@@ -5,3 +5,14 @@ export interface Region {
   isChildrenAllowed: boolean;
   isSmokingAllowed: boolean;
 }
+
+export interface RegionAvailability {
+  region: Region;
+  dates: Record<string, DateAvailability>;
+}
+
+export interface DateAvailability {
+  times: string[];
+  capacities: number[];
+}
+
