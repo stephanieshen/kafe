@@ -4,7 +4,6 @@
 
 @use "tailwindcss";
 
-@use 'base';
-@use 'stepper';
-@use 'typography';
-
+@use "base";
+@use "components";
+@use "vendors";

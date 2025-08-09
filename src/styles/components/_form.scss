@@ -1,0 +1,9 @@
+.kafe-form {
+  &__field {
+    @apply my-4;
+  }
+
+  &__label {
+    @apply block mb-1;
+  }
+}
