@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StepRegionComponent } from './step-region.component';
+import { ContactDetailsComponent } from './contact-detailscomponent';
 
-describe('StepRegionComponent', () => {
-  let component: StepRegionComponent;
-  let fixture: ComponentFixture<StepRegionComponent>;
+describe('ContactDetailsComponent', () => {
+  let component: ContactDetailsComponent;
+  let fixture: ComponentFixture<ContactDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StepRegionComponent]
+      imports: [ContactDetailsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StepRegionComponent);
+    fixture = TestBed.createComponent(ContactDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

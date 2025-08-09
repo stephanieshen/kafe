@@ -1,0 +1,69 @@
+<div class="booking-details" [formGroup]="form">
+  <p class="text-sm">
+    Fill in your details and preferences so we can reserve your spot.
+  </p>
+
+  <div>
+    <div class="mt-4">
+      <label class="kafe-form__label">Select date and time</label>
+    </div>
+    <div class="flex gap-12">
+      <div class="kafe-form__field w-1/2 m-0">
+        <p-datepicker
+          class="max-w-full"
+          formControlName="date"
+          [inline]="true"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          [yearNavigator]="false"
+          [monthNavigator]="false"
+        />
+      </div>
+      <div class="kafe-form__field w-1/2 m-0">
+        @for (timeslot of timeslots; track timeslot.label; let i = $index) {
+          <div class="booking-details__timeslot">
+            <p-radiobutton
+              name="timeslot"
+              [value]="timeslot"
+              formControlName="timeslot"
+              inputId="slot-{{ i }}"
+            />
+            <label for="slot-{{ i }}" class="ml-2">
+              {{ timeslot.label }}
+            </label>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="mt-5">
+      <div class="kafe-form__field">
+        <label class="kafe-form__label">Select number of pax</label>
+        <p-select
+          class="w-md"
+          [options]="sizes"
+          formControlName="partySize"
+          placeholder="Select number of pax"
+        />
+      </div>
+      <div class="kafe-form__field booking-details__checkbox-field">
+        <p-checkbox class="leading-none" formControlName="childrenAllowed" [binary]="true" />
+        <label class="kafe-form__label mb-0">
+          Will children be part of your reservation?
+        </label>
+      </div>
+      <div class="kafe-form__field booking-details__checkbox-field">
+        <p-checkbox class="leading-none" formControlName="smokingAllowed" [binary]="true" />
+        <label class="kafe-form__label">
+          Is smoking preferred for your reservation?
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <app-region-selection
+      [form]="form"
+      [suggestedRegions]="suggestedRegions"
+    ></app-region-selection>
+  </div>
+</div>

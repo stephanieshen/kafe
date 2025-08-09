@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
 import { Reservation } from '../models/reservation.model';
-import { selectRegionsAvailability, selectReservations, selectState } from '../state/store/reservation.selectors';
-import { bookReservation } from '../state/store/reservation.actions';
-import { Region, RegionAvailability } from '../models/region.model';
+import { selectRegionsAvailability, selectReservations, selectState, selectSuggestedRegions } from '../state/store/reservation.selectors';
+import { bookReservation, setSuggestedRegions } from '../state/store/reservation.actions';
+import { Region, RegionAvailability, SuggestedRegion } from '../models/region.model';
 import { ReservationState } from '../state/models/reservation-state.model';
 import { filter as _filter } from 'lodash-es';
 import dayjs from 'dayjs';
@@ -25,19 +25,39 @@ export class ReservationService {
     return this.store.select(selectReservations);
   }
 
-  getsRegionsAvailability$(): Observable<RegionAvailability[]> {
+  getRegionsAvailability$(): Observable<RegionAvailability[]> {
     return this.store.select(selectRegionsAvailability);
   }
 
-  getSuggestedRegions$(reservation: Reservation): Observable<RegionAvailability[]> {
-    return this.getsRegionsAvailability$().pipe(
-      map(regionsAvailability => this.filterRegionByPreferences(regionsAvailability, reservation)),
-      map(regionsAvailability => this.filterByCapacity(regionsAvailability, reservation))
-    )
+  getSuggestedRegions$(): Observable<SuggestedRegion[]> {
+    return this.store.select(selectSuggestedRegions);
+  }
+
+  setSuggestedRegions(reservation: Reservation): void {
+    this.filterSuggestedRegions$(reservation)
+      .subscribe({
+        next: (regionsAvailability) => {
+          const suggestedRegions = regionsAvailability.map((regionsAvailability) => {
+            const availableCapacity = this.getAvailableCapacity(regionsAvailability, reservation);
+            return {
+              region: regionsAvailability.region,
+              availableSlots: availableCapacity
+            }
+          });
+          this.store.dispatch(setSuggestedRegions({ suggestedRegions }));
+        }
+      });
   }
 
   book(reservation: Reservation) {
     this.store.dispatch(bookReservation({reservation}));
+  }
+
+  private filterSuggestedRegions$(reservation: Reservation): Observable<RegionAvailability[]> {
+    return this.getRegionsAvailability$().pipe(
+      map(regionsAvailability => this.filterRegionByPreferences(regionsAvailability, reservation)),
+      map(regionsAvailability => this.filterByCapacity(regionsAvailability, reservation))
+    )
   }
 
   private filterRegionByPreferences(
@@ -46,7 +66,13 @@ export class ReservationService {
   ): RegionAvailability[] {
     return _filter(regionsAvailability, (availability: RegionAvailability) => {
       const region = availability.region;
-      return region.isChildrenAllowed === reservation.childrenAllowed &&
+
+      // return if no preference is selected
+      if (!reservation.childrenAllowed && !reservation.smokingAllowed) {
+        return true;
+      }
+
+      return region.isChildrenAllowed === reservation.childrenAllowed ||
               region.isSmokingAllowed === reservation.smokingAllowed
     })
   }
@@ -56,11 +82,17 @@ export class ReservationService {
     reservation: Reservation
   ): RegionAvailability[] {
     return _filter(regionsAvailability, (availability: RegionAvailability) => {
-      const reservationDate = dayjs(reservation.date).format('MM-DD-YY');
-      const timeslotIndex = availability.dates[reservationDate].times.indexOf(reservation.timeslot.value);
-      const availableCapacity = availability.dates[reservationDate].capacities[timeslotIndex];
-      console.log(availableCapacity)
+      const availableCapacity = this.getAvailableCapacity(availability, reservation);
       return availableCapacity >= reservation.partySize
     });
+  }
+
+  private getAvailableCapacity(
+    regionAvailability: RegionAvailability,
+    reservation: Reservation
+  ): number {
+    const reservationDate = dayjs(reservation.date).format('MM-DD-YY');
+    const timeslotIndex = regionAvailability.dates[reservationDate].times.indexOf(reservation.timeslot?.value);
+    return regionAvailability.dates[reservationDate].capacities[timeslotIndex];
   }
 }

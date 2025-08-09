@@ -3,11 +3,11 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-step-contact',
+  selector: 'app-contact-details',
   imports: [InputTextModule, ReactiveFormsModule],
-  templateUrl: './step-contact.component.html',
-  styleUrl: './step-contact.component.scss'
+  templateUrl: './contact-details.component.html',
+  styleUrl: './contact-details.component.scss'
 })
-export class StepContactComponent {
+export class ContactDetailsComponent {
   @Input() form!: FormGroup
 }

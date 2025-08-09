@@ -1,4 +1,4 @@
-.date-time {
+.booking-details {
 
   .p-datepicker-prev-button,
   .p-datepicker-next-button {
@@ -9,16 +9,18 @@
     pointer-events: none !important;
   }
 
+  &__checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
   &__timeslot {
     display: flex;
     align-items: center;
   
     &:not(:last-of-type) {
       margin-bottom: 1rem;
-    }
-
-    &:first-of-type {
-      margin-top: 1rem;
     }
 
     p-radiobutton {

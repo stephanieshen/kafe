@@ -16,3 +16,8 @@ export interface DateAvailability {
   capacities: number[];
 }
 
+export interface SuggestedRegion {
+  region: Region;
+  availableSlots: number;
+}
+

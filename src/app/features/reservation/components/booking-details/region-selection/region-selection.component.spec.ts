@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StepDateTimeComponent } from './step-date-time.component';
+import { RegionSelectionComponent } from './region-selection.component';
 
-describe('StepDateTimeComponent', () => {
-  let component: StepDateTimeComponent;
-  let fixture: ComponentFixture<StepDateTimeComponent>;
+describe('RegionSelectionComponent', () => {
+  let component: RegionSelectionComponent;
+  let fixture: ComponentFixture<RegionSelectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StepDateTimeComponent]
+      imports: [RegionSelectionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StepDateTimeComponent);
+    fixture = TestBed.createComponent(RegionSelectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

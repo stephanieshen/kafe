@@ -1,27 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
-
 import { Components } from './components';
 import { Step } from './models/step.model';
-import { filter, find } from 'lodash-es';
 import { STEPS } from './constants/steps.const';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Reservation } from './models/reservation.model';
 import { ReservationService } from './services/reservation.service';
-import { Timeslot } from './models/timeslot.model';
-import { REGIONS } from './constants/regions.const';
-import { Region } from './models/region.model';
+import { Region, RegionAvailability, SuggestedRegion } from './models/region.model';
 
 @Component({
   selector: 'app-reservation',
@@ -42,7 +36,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
   reservations$!: Observable<Reservation>[];
   reservationForm!: FormGroup;
   steps: Step[] = STEPS;
-  suggestedRegions: Region[] = [];
+  suggestedRegions$!: Observable<SuggestedRegion[]>;
 
   private destroyed$ = new Subject();
 
@@ -53,7 +47,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initReservationForm();
-    this.reservationService.getsRegionsAvailability$().subscribe(x => console.log('state', x))
+    this.initFormListener();
+    this.suggestedRegions$ = this.reservationService.getSuggestedRegions$();
   }
 
   ngOnDestroy(): void {
@@ -61,48 +56,14 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  get date(): AbstractControl {
-    return this.reservationForm.get('date') as AbstractControl;
-  }
-
-  get time(): AbstractControl {
-    return this.reservationForm.get('timeslot') as AbstractControl;
-  }
-
-  get partySize(): AbstractControl {
-    return this.reservationForm.get('partySize') as AbstractControl;
-  }
-
-  get chilredAllowed(): AbstractControl {
-    return this.reservationForm.get('childrenAllowed') as AbstractControl;
-  }
-
-  get smokingAllowed(): AbstractControl {
-    return this.reservationForm.get('smokingAllowed') as AbstractControl;
-  }
-
   bookAnother(): void {
     this.isCompleted = false;
   }
 
   submit(): void {
-    this.reservationService.book(this.reservationForm.value);
-    this.isCompleted = true;
-  }
-
-  handleNextStep(nextStep: number) {
-    const nextStepItem = find(this.steps, ['step', nextStep]);
-
-    if (nextStepItem?.code === 'region-selection') {
-      const reservation = this.reservationForm.value;
-      this.reservationService.getSuggestedRegions$(reservation)
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe({
-          next: (regionsAvailability) => {
-            this.suggestedRegions = regionsAvailability.map(availability => availability.region);
-          }
-        })
-    }
+    console.log(this.reservationForm.value)
+    // this.reservationService.book(this.reservationForm.value);
+    // this.isCompleted = true;
   }
 
   private initReservationForm(): void {
@@ -117,5 +78,30 @@ export class ReservationComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
     });
+  }
+
+  private initFormListener(): void {
+    const fieldsToWatch = [
+      'date',
+      'timeslot',
+      'partySize',
+      'childrenAllowed',
+      'smokingAllowed'
+    ];
+
+    fieldsToWatch.forEach(field => {
+      this.reservationForm.get(field)?.valueChanges
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe({
+          next: () => setTimeout(() => {
+            this.setSuggestedRegions();
+          }, 200)
+        });
+    });
+  }
+
+  private setSuggestedRegions(): void {
+    const formValue = this.reservationForm.value;
+    this.reservationService.setSuggestedRegions(formValue);
   }
 }
