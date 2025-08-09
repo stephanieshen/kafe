@@ -5,11 +5,14 @@
   </p>
   <div class="kafe-form__field">
     <label class="kafe-form__label">Select date</label>
-    <p-datepicker
+    <p-calendar
+      class="max-w-full"
       formControlName="date"
-      [iconDisplay]="'input'"
-      [showIcon]="true"
-      inputId="icondisplay"
+      [inline]="true"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [yearNavigator]="false"
+      [monthNavigator]="false"
     />
   </div>
   <div class="kafe-form__field">

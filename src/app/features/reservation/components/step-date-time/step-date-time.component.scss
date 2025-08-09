@@ -1,3 +1,12 @@
 .date-time {
+  min-height: 500px;
 
+  .p-datepicker-prev-button,
+  .p-datepicker-next-button {
+    display: none !important;
+  }
+
+  .p-datepicker-title {
+    pointer-events: none !important;
+  }
 }

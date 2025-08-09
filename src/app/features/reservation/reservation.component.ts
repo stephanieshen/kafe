@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -16,18 +21,16 @@ import { Components } from './components';
     CardModule,
     CommonModule,
     ReactiveFormsModule,
-    StepperModule
+    StepperModule,
   ],
   templateUrl: './reservation.component.html',
-  styleUrl: './reservation.component.scss'
+  styleUrl: './reservation.component.scss',
 })
 export class ReservationComponent implements OnInit {
   reservationForm!: FormGroup;
-  steps: string[] = []
+  steps: string[] = [];
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.steps = this.getSteps();
@@ -40,7 +43,7 @@ export class ReservationComponent implements OnInit {
 
   private initReservationForm(): void {
     this.reservationForm = this.formBuilder.group({
-      date: [null, Validators.required],
+      date: [new Date(2025, 6, 24), Validators.required],
       time: [null, Validators.required],
       partySize: [null, [Validators.required, Validators.min(1)]],
       region: [null, [Validators.required]],
@@ -48,7 +51,7 @@ export class ReservationComponent implements OnInit {
       smokingAllowed: [],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required]
+      phone: ['', Validators.required],
     });
   }
 
@@ -58,7 +61,7 @@ export class ReservationComponent implements OnInit {
       'Party Size & Preferences',
       'Region Selection',
       'Contact Details',
-      'Review and Confirm'
+      'Review and Confirm',
     ];
   }
 }
