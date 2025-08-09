@@ -3,19 +3,35 @@
     Please select the date and time of your reservation. All bookings are
     scheduled in 30-minute intervals between 6:00 PM and 10:00 PM.
   </p>
-  <div class="kafe-form__field">
-    <label class="kafe-form__label">Select date</label>
-    <p-calendar
-      class="max-w-full"
-      formControlName="date"
-      [inline]="true"
-      [minDate]="minDate"
-      [maxDate]="maxDate"
-      [yearNavigator]="false"
-      [monthNavigator]="false"
-    />
+  <div class="mt-3">
+    <label class="kafe-form__label">Select date and time</label>
   </div>
-  <div class="kafe-form__field">
-    <p>Show time slot here</p>
+  <div class="flex gap-15">
+    <div class="kafe-form__field w-1/2 m-0">
+      <p-calendar
+        class="max-w-full"
+        formControlName="date"
+        [inline]="true"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        [yearNavigator]="false"
+        [monthNavigator]="false"
+      />
+    </div>
+    <div class="kafe-form__field w-1/2 m-0">
+      @for (timeslot of timeslots; track timeslot.label; let i = $index) {
+        <div class="date-time__timeslot">
+          <p-radiobutton
+            name="time"
+            [value]="timeslot.value"
+            formControlName="time"
+            inputId="slot-{{ i }}"
+          />
+          <label for="slot-{{ i }}" class="ml-2">
+            {{ timeslot.label }}
+          </label>
+        </div>
+      }
+    </div>
   </div>
 </div>

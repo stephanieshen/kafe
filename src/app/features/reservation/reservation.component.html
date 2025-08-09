@@ -5,14 +5,15 @@
       <p-stepper [value]="1">
         <form [formGroup]="reservationForm">
           @for (step of steps; track step; let i = $index) {
-            <p-step-item [value]="i + 1">
+            @let value = i + 1;
+            <p-step-item [value]="value">
               <p-step>
                 <h3 class="reservation__step-title">{{ step }}</h3>
               </p-step>
               <p-step-panel>
                 <ng-template #content let-activateCallback="activateCallback">
 
-                  <ng-container [ngSwitch]="i + 1">
+                  <ng-container [ngSwitch]="value">
                     <app-step-date-time *ngSwitchCase="1" [form]="reservationForm"></app-step-date-time>
                     <app-step-size-and-preferences *ngSwitchCase="2" [form]="reservationForm"></app-step-size-and-preferences>
                     <app-step-region *ngSwitchCase="3" [form]="reservationForm"></app-step-region>
@@ -20,12 +21,17 @@
                     <app-step-review *ngSwitchCase="5" [form]="reservationForm"></app-step-review>
                   </ng-container>
 
+                  <div class="flex py-10 gap-2">
+                    @if (value > 1) {
+                      <p-button label="Back" severity="secondary" (onClick)="activateCallback(value - 1)" />
+                    }
+                    <p-button label="Next" (onClick)="activateCallback(value + 1)" />
+                  </div>
                 </ng-template>
               </p-step-panel>
             </p-step-item>
           }
         </form>
-        
       </p-stepper>
       <button (click)="submit()">Test</button>
     </p-card>

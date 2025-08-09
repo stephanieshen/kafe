@@ -1,0 +1,27 @@
+@use "sass:color";
+
+.p-button {
+  background-color: var(--light-brown) !important;
+  border: 2px solid var(--light-brown) !important;
+
+  .p-button-label {
+    color:var(--dark);
+  }
+
+  &:not(:disabled):hover {
+    background-color: color.scale(#D6C0B3, $lightness: -10%) !important;
+  }
+}
+
+.p-button.p-button-secondary {
+  background-color: var(--white) !important;
+  border: 2px solid var(--light-brown) !important;
+
+  .p-button-label {
+    color: var(--dark);
+  }
+
+  &:not(:disabled):hover {
+    background-color: var(--white) !important;
+  }
+}

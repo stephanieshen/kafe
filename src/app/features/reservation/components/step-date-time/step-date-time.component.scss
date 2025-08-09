@@ -1,5 +1,4 @@
 .date-time {
-  min-height: 500px;
 
   .p-datepicker-prev-button,
   .p-datepicker-next-button {
@@ -8,5 +7,22 @@
 
   .p-datepicker-title {
     pointer-events: none !important;
+  }
+
+  &__timeslot {
+    display: flex;
+    align-items: center;
+  
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+
+    &:first-of-type {
+      margin-top: 1rem;
+    }
+
+    p-radiobutton {
+      line-height: 0;
+    }
   }
 }
