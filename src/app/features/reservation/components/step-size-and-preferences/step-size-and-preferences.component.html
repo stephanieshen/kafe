@@ -1,5 +1,27 @@
-<div class="size-and-preferences">
+<div class="size-and-preferences" [formGroup]="form">
   <p class="text-sm">
-    Let us know your total number of guests, and if your group includes children or would like a smoking area.
+    Let us know your total number of guests, and if your group includes children
+    or would like a smoking area.
   </p>
+  <div class="kafe-form__field">
+    <label class="kafe-form__label">Select number of pax</label>
+    <p-dropdown
+      class="w-md"
+      formControlName="partySize"
+      [options]="sizes"
+      placeholder="Select number of pax"
+    ></p-dropdown>
+  </div>
+  <div class="kafe-form__field">
+    <label class="kafe-form__label">
+      Will children be part of your reservation?
+    </label>
+    <p-checkbox formControlName="childrenAllowed" [binary]="true" />
+  </div>
+  <div class="kafe-form__field">
+    <label class="kafe-form__label">
+      Is smoking preferred for your reservation?
+    </label>
+    <p-checkbox formControlName="childrenAllowed" [binary]="true" />
+  </div>
 </div>

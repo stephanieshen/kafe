@@ -1,13 +1,18 @@
 <div class="date-time" [formGroup]="form">
   <p class="text-sm">
-    Please select the date and time of your reservation. All bookings are scheduled in 30-minute 
-    intervals between 6:00 PM and 10:00 PM.
+    Please select the date and time of your reservation. All bookings are
+    scheduled in 30-minute intervals between 6:00 PM and 10:00 PM.
   </p>
-  <div class="my-3">
-    <label class="block">Select date:</label>
-    <p-datepicker formControlName="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+  <div class="kafe-form__field">
+    <label class="kafe-form__label">Select date</label>
+    <p-datepicker
+      formControlName="date"
+      [iconDisplay]="'input'"
+      [showIcon]="true"
+      inputId="icondisplay"
+    />
   </div>
-  <div>
-    <p> Show time slot here</p>
+  <div class="kafe-form__field">
+    <p>Show time slot here</p>
   </div>
 </div>

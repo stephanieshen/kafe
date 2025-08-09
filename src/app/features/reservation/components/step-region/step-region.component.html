@@ -1,5 +1,17 @@
-<div class="region">
+<div class="region" [formGroup]="form">
   <p class="text-sm">
-    Choose your preferred dining area so we can seat you in the spot you’ll enjoy most.
+    Choose your preferred dining area so we can seat you in the spot you’ll
+    enjoy most.
   </p>
+  <div class="kafe-form__field">
+    <label class="kafe-form__label">Region</label>
+    <p-dropdown
+      class="w-md"
+      formControlName="region"
+      [options]="regions"
+      optionLabel="label"
+      placeholder="Select a Region"
+    >
+    </p-dropdown>
+  </div>
 </div>
