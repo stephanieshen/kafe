@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -13,11 +14,14 @@ import { StepperModule } from 'primeng/stepper';
 
 import { Components } from './components';
 import { Step } from './models/step.model';
-import { find } from 'lodash-es';
+import { filter, find } from 'lodash-es';
 import { STEPS } from './constants/steps.const';
 import { Observable } from 'rxjs';
 import { Reservation } from './models/reservation.model';
 import { ReservationService } from './services/reservation.service';
+import { Timeslot } from './models/timeslot.model';
+import { REGIONS } from './constants/regions.const';
+import { Region } from './models/region.model';
 
 @Component({
   selector: 'app-reservation',
@@ -34,6 +38,7 @@ import { ReservationService } from './services/reservation.service';
   styleUrl: './reservation.component.scss',
 })
 export class ReservationComponent implements OnInit {
+  isCompleted: boolean = false;
   reservations$!: Observable<Reservation>[];
   reservationForm!: FormGroup;
   steps: Step[] = STEPS;
@@ -48,8 +53,33 @@ export class ReservationComponent implements OnInit {
     this.reservationService.getReservationState$().subscribe(x => console.log('state', x))
   }
 
+  get date(): AbstractControl {
+    return this.reservationForm.get('date') as AbstractControl;
+  }
+
+  get time(): AbstractControl {
+    return this.reservationForm.get('timeslot') as AbstractControl;
+  }
+
+  get partySize(): AbstractControl {
+    return this.reservationForm.get('partySize') as AbstractControl;
+  }
+
+  get chilredAllowed(): AbstractControl {
+    return this.reservationForm.get('childrenAllowed') as AbstractControl;
+  }
+
+  get smokingAllowed(): AbstractControl {
+    return this.reservationForm.get('smokingAllowed') as AbstractControl;
+  }
+
+  bookAnother(): void {
+    this.isCompleted = false;
+  }
+
   submit(): void {
     this.reservationService.book(this.reservationForm.value);
+    this.isCompleted = true;
   }
 
   handleNextStep(nextStep: number) {
@@ -59,9 +89,30 @@ export class ReservationComponent implements OnInit {
     // user inputs pax and preferences
     // const suggestedRegions = check availble regions based on preferences
     // chekc suggestedRegions availability
+
+
+    // suggestedRegions = get available regions based on prefences
+    // already have suggestedRegions
+    // storedRegions = next is to check store and filter the regions based on suggestedRegions 
+    // already have storedRegions
+    // next is to filter this storedRegions based on selected date and time
+    // already have storedRegions based on user selected date and time (and also on preferences)
+    // check if pax still availabel
+
     if (nextStepItem?.code === 'region-selection') {
-      
+      const suggestedRegions = this.getRegionsBasedOnPreferences();
+      console.log(suggestedRegions)
     }
+  }
+
+  getRegionsBasedOnPreferences(): Region[] {
+    const isChildrenAllowed = this.chilredAllowed.value;
+    const isSmokingAllowed = this.smokingAllowed.value;
+
+    return filter(REGIONS, (region: Region) => {
+      return region.isChildrenAllowed === isChildrenAllowed &&
+             region.isSmokingAllowed === isSmokingAllowed;
+    });
   }
 
   private initReservationForm(): void {

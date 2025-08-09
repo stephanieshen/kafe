@@ -1,0 +1,35 @@
+.completed {
+  padding: 4rem;
+
+  &__action-btn {
+    text-align: center;
+    margin: 3rem auto 0;
+  }
+
+  &__description {
+    margin-top: 1.8rem;
+    text-align: center;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  &__icon-container {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--success);
+    border-radius: 99px;
+    color: var(--white);
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-family: var(--font-montserrat-bold);
+  }
+}
