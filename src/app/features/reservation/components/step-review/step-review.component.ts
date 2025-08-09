@@ -12,7 +12,5 @@ import { CommonModule } from '@angular/common';
 export class StepReviewComponent implements OnInit {
   @Input() formValue!: Reservation;
 
-  ngOnInit(): void {
-    console.log(this.formValue)
-  }
+  ngOnInit(): void {}
 }

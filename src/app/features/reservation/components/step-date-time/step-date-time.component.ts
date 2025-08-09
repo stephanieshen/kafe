@@ -26,7 +26,6 @@ export class StepDateTimeComponent implements OnInit {
 
   ngOnInit(): void {
     this.timeslots = this.generateTimeSlots();
-    console.log(this.timeslots);
   }
 
   generateTimeSlots() {

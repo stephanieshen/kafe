@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "@ngrx/store": "^20.0.0",
+    "@ngrx/store-devtools": "^20.0.0",
     "@primeng/themes": "^20.0.1",
     "@tailwindcss/postcss": "^4.1.11",
     "lodash-es": "^4.17.21",

@@ -15,6 +15,9 @@ import { Components } from './components';
 import { Step } from './models/step.model';
 import { find } from 'lodash-es';
 import { STEPS } from './constants/steps.const';
+import { Observable } from 'rxjs';
+import { Reservation } from './models/reservation.model';
+import { ReservationService } from './services/reservation.service';
 
 @Component({
   selector: 'app-reservation',
@@ -26,25 +29,27 @@ import { STEPS } from './constants/steps.const';
     ReactiveFormsModule,
     StepperModule,
   ],
+  providers: [ReservationService],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss',
 })
 export class ReservationComponent implements OnInit {
+  reservations$!: Observable<Reservation>[];
   reservationForm!: FormGroup;
   steps: Step[] = STEPS;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private reservationService: ReservationService
+  ) {}
 
   ngOnInit(): void {
     this.initReservationForm();
+    this.reservationService.getReservationState$().subscribe(x => console.log('state', x))
   }
 
   submit(): void {
-    console.log(this.reservationForm.value);
-  }
-
-  bookReservation(): void {
-    console.log(this.reservationForm.value)
+    this.reservationService.book(this.reservationForm.value);
   }
 
   handleNextStep(nextStep: number) {
