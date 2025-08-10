@@ -1,3 +1,6 @@
+<img width="1396" height="1590" alt="image" src="https://github.com/user-attachments/assets/b3fc1d02-664c-414a-adb4-5d9375e7fa32" />
+
+
 # Kafe
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
