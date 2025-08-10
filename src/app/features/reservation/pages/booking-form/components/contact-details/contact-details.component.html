@@ -5,7 +5,7 @@
   </p>
   <div class="kafe-form__field">
     <label class="kafe-form__label">
-      Name <sup class="text-red-500">*required</sup>
+      Name <sup class="text-red-500">*</sup>
     </label>
     <input type="text" pInputText formControlName="name" class="w-md" />
     @if (form.get('name')?.invalid && form.get('name')?.dirty) {
@@ -16,7 +16,7 @@
   </div>
   <div class="kafe-form__field">
     <label class="kafe-form__label">
-      Email <sup class="text-red-500">*required</sup>
+      Email <sup class="text-red-500">*</sup>
     </label>
     <input type="text" pInputText formControlName="email" class="w-md" />
     @if (form.get('email')?.hasError('required') && form.get('email')?.dirty) {
@@ -33,7 +33,7 @@
   </div>
   <div class="kafe-form__field">
     <label class="kafe-form__label">
-      Phone <sup class="text-red-500">*required</sup>
+      Phone <sup class="text-red-500">*</sup>
     </label>
     <input type="text" pInputText formControlName="phone" class="w-md" />
     @if (form.get('phone')?.invalid && form.get('phone')?.dirty) {
