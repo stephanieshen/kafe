@@ -11,7 +11,11 @@
     </div>
     <div class="review__item">
       <label class="review__item-label">Time:</label>
-      <span class="review__item-value">{{ formValue.timeslot.label }}</span>
+      <span class="review__item-value">
+        @if (formValue.timeslot) {
+          {{ formValue.timeslot.label }}
+        }
+      </span>
     </div>
     <div class="review__item">
       <label class="review__item-label">Party Size:</label>
@@ -27,7 +31,11 @@
     </div>
     <div class="review__item">
       <label class="review__item-label">Region</label>
-      <span class="review__item-value">{{ formValue.region.label }}</span>
+      <span class="review__item-value">
+        @if (formValue.region) {
+          {{ formValue.region.label }}
+        }
+      </span>
     </div>
     <div class="review__item">
       <label class="review__item-label">Name</label>
