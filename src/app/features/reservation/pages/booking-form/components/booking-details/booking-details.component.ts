@@ -9,12 +9,14 @@ import { RegionSelectionComponent } from './region-selection/region-selection.co
 import { SuggestedRegion } from '../../../../models/region.model';
 import { Timeslot } from '../../../../models/timeslot.model';
 import { generateTimeSlots } from '../../../../utils/generate-time-slots.util';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-booking-details',
   imports: [
     ButtonModule,
+    CommonModule,
     CheckboxModule,
     DatePickerModule,
     RadioButtonModule,

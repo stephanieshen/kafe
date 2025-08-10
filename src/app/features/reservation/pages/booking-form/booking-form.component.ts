@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -31,6 +31,7 @@ import { Router } from '@angular/router';
   providers: [ReservationService],
   templateUrl: './booking-form.component.html',
   styleUrl: './booking-form.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class BookingFormComponent implements OnInit, OnDestroy {
   reservations$!: Observable<Reservation>[];

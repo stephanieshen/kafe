@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Reservation } from '../../../../models/reservation.model';
 
 @Component({
   selector: 'app-step-review',
@@ -10,7 +9,7 @@ import { Reservation } from '../../../../models/reservation.model';
   styleUrl: './step-review.component.scss'
 })
 export class StepReviewComponent implements OnInit {
-  @Input() formValue!: Reservation;
+  @Input() form!: FormGroup;
 
   ngOnInit(): void {}
 }

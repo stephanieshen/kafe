@@ -4,15 +4,42 @@
     share any updates.
   </p>
   <div class="kafe-form__field">
-    <label class="kafe-form__label">Name</label>
+    <label class="kafe-form__label">
+      Name <sup class="text-red-500">*required</sup>
+    </label>
     <input type="text" pInputText formControlName="name" class="w-md" />
+    @if (form.get('name')?.invalid && form.get('name')?.dirty) {
+      <small class="p-error block text-red-500 mt-2">
+        Name is required
+      </small>
+    }
   </div>
   <div class="kafe-form__field">
-    <label class="kafe-form__label">Email</label>
+    <label class="kafe-form__label">
+      Email <sup class="text-red-500">*required</sup>
+    </label>
     <input type="text" pInputText formControlName="email" class="w-md" />
+    @if (form.get('email')?.hasError('required') && form.get('email')?.dirty) {
+      <small class="p-error block text-red-500 mt-2">
+        Email is required
+      </small>
+    }
+
+    @if (form.get('email')?.hasError('email') && form.get('email')?.dirty) {
+      <small class="p-error block text-red-500 mt-2">
+        Please enter a valid email address
+      </small>
+    }
   </div>
   <div class="kafe-form__field">
-    <label class="kafe-form__label">Phone</label>
+    <label class="kafe-form__label">
+      Phone <sup class="text-red-500">*required</sup>
+    </label>
     <input type="text" pInputText formControlName="phone" class="w-md" />
+    @if (form.get('phone')?.invalid && form.get('phone')?.dirty) {
+      <small class="p-error block text-red-500 mt-2">
+        Phone is required
+      </small>
+    }
   </div>
 </div>

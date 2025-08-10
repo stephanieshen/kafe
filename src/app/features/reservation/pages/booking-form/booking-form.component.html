@@ -15,7 +15,7 @@
                   <ng-container [ngSwitch]="stepItem.step">
                     <app-booking-details *ngSwitchCase="1" [form]="reservationForm" [suggestedRegions]="(suggestedRegions$ | async) || []"></app-booking-details>
                     <app-contact-details *ngSwitchCase="2" [form]="reservationForm"></app-contact-details>
-                    <app-step-review *ngSwitchCase="3" [formValue]="reservationForm.value"></app-step-review>
+                    <app-step-review *ngSwitchCase="3" [form]="reservationForm"></app-step-review>
                   </ng-container>
 
                   <div class="flex py-10 gap-2">

@@ -8,3 +8,7 @@
   font-family: var(--font-montserrat-medium) !important;
   color: var(--dark) !important;
 }
+
+.p-step {
+  pointer-events: none !important;
+}

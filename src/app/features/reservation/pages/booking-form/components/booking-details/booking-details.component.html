@@ -5,7 +5,9 @@
 
   <div>
     <div class="mt-4">
-      <label class="kafe-form__label">Select date and time</label>
+      <label class="kafe-form__label">
+        Select date and time <sup class="text-red-500">*required</sup>
+      </label>
     </div>
     <div class="flex gap-12">
       <div class="kafe-form__field w-1/2 m-0">
@@ -18,6 +20,11 @@
           [yearNavigator]="false"
           [monthNavigator]="false"
         />
+        @if (form.get('date')?.invalid && form.get('date')?.dirty) {
+          <small class="p-error block text-red-500 mt-2">
+            Date is required
+          </small>
+        }
       </div>
       <div class="kafe-form__field w-1/2 m-0">
         @for (timeslot of timeslots; track timeslot.label; let i = $index) {
@@ -33,17 +40,29 @@
             </label>
           </div>
         }
+        @if (form.get('timeslot')?.invalid && form.get('timeslot')?.dirty) {
+          <small class="p-error block text-red-500 mt-2">
+            Time is required
+          </small>
+        }
       </div>
     </div>
     <div class="mt-5">
       <div class="kafe-form__field">
-        <label class="kafe-form__label">Select number of pax</label>
+        <label class="kafe-form__label">
+          Select number of pax <sup class="text-red-500">*required</sup>
+        </label>
         <p-select
           class="w-md"
           [options]="sizes"
           formControlName="partySize"
           placeholder="Select number of pax"
         />
+        @if (form.get('partySize')?.invalid && form.get('partySize')?.dirty) {
+          <small class="p-error block text-red-500 mt-2">
+            Party size is required
+          </small>
+        }
       </div>
       <div class="kafe-form__field booking-details__checkbox-field">
         <p-checkbox class="leading-none" formControlName="childrenAllowed" [binary]="true" />
