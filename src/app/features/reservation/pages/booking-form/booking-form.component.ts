@@ -58,6 +58,10 @@ export class BookingFormComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
+    if (!this.reservationForm.valid) {
+      return;
+    }
+    
     this.reservationService.book(this.reservationForm.value)
       .pipe(takeUntil(this.destroyed$))
       .subscribe({

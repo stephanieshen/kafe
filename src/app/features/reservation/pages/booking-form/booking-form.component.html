@@ -35,7 +35,7 @@
                     }
 
                     @if (stepItem.step === steps.length) {
-                      <p-button label="Book" (click)="submit()" />
+                      <p-button label="Book" (click)="submit()" [disabled]="!reservationForm.valid" />
                     }
                   </div>
                 </ng-template>
