@@ -1,0 +1,9 @@
+.region {
+  min-height: 200px;
+
+  &__slot-info {
+    color: var(--error);
+    font-family: var(--font-montserrat-semibold);
+    font-size: 0.875rem;
+  }
+}

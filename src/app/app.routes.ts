@@ -8,8 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'reservation',
-    loadComponent: () => import('./features/reservation/reservation.component').then(c => c.ReservationComponent)
-  },
+    loadChildren: () => import('./features/reservation/reservation.routes').then(m => m.reservationRoutes)  },
   {
     path: '**',
     redirectTo: 'reservation'

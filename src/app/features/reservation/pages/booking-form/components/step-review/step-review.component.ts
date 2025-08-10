@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Reservation } from '../../models/reservation.model';
 import { CommonModule } from '@angular/common';
+import { Reservation } from '../../../../models/reservation.model';
 
 @Component({
   selector: 'app-step-review',

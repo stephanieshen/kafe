@@ -12,7 +12,17 @@
       <ng-template #body let-suggestedRegion>
         <tr>
           <td>{{ suggestedRegion.region.label }}</td>
-          <td>{{ suggestedRegion.availableSlots }}</td>
+          <td>
+            @if (suggestedRegion.availableSlots === 0) {
+              <span class="region__slot-info">Fully booked</span>
+            }
+            @else if (suggestedRegion.availableSlots <= 2) {
+             {{ suggestedRegion.availableSlots }} <span class="region__slot-info">Limited slots</span>
+            }
+            @else {
+              {{ suggestedRegion.availableSlots }}
+            }
+          </td>
           <td>
             <p-radiobutton
               name="region"

@@ -1,0 +1,12 @@
+.booking-form {
+  padding: 4rem;
+
+  &__card-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  &__step-title {
+    font-family: var(--font-montserrat-medium);
+  }
+}

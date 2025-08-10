@@ -15,7 +15,7 @@ export const selectReservations = createSelector(
 
 export const selectRegionsAvailability = createSelector(
   selectReservationsState,
-  (state) => state.regionAvailability
+  (state) => state.regionsAvailability
 );
 
 export const selectSuggestedRegions = createSelector(

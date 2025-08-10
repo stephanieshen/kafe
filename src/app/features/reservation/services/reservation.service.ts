@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { filter, map, Observable } from 'rxjs';
+import { map, Observable, take, tap } from 'rxjs';
 import { Reservation } from '../models/reservation.model';
 import { selectRegionsAvailability, selectReservations, selectState, selectSuggestedRegions } from '../state/store/reservation.selectors';
-import { bookReservation, setSuggestedRegions } from '../state/store/reservation.actions';
-import { Region, RegionAvailability, SuggestedRegion } from '../models/region.model';
+import { bookReservation, setSuggestedRegions, updateRegionsAvailability } from '../state/store/reservation.actions';
+import { RegionAvailability, SuggestedRegion } from '../models/region.model';
 import { ReservationState } from '../state/models/reservation-state.model';
-import { filter as _filter } from 'lodash-es';
+import { filter as _filter, cloneDeep, find } from 'lodash-es';
 import dayjs from 'dayjs';
 
 @Injectable({
@@ -33,6 +33,33 @@ export class ReservationService {
     return this.store.select(selectSuggestedRegions);
   }
 
+  getUpdatedRegionsAvailability$(reservation: Reservation): Observable<RegionAvailability[]> {
+    return this.getRegionsAvailability$().pipe(
+      take(1), 
+      map((regionsAvailability) => {
+        const regionsAvailabilityState = cloneDeep(regionsAvailability);
+        const regionToUpdate = find(regionsAvailabilityState, ['region.id', reservation.region.id]);
+        const reservationDate = dayjs(reservation.date).format('MM-DD-YY');
+        const timeslotIndex = regionToUpdate?.dates[reservationDate].times.indexOf(reservation.timeslot?.value);
+
+        if (regionToUpdate && timeslotIndex !== undefined) {
+          regionToUpdate.dates[reservationDate].capacities[timeslotIndex] -= reservation.partySize;
+        }
+
+        return regionsAvailabilityState;
+      })
+    );
+  }
+
+  book(reservation: Reservation): Observable<void> {
+    return this.getUpdatedRegionsAvailability$(reservation).pipe(
+      map((regionsAvailability) => {
+        this.store.dispatch(bookReservation({ reservation }));
+        this.store.dispatch(updateRegionsAvailability({ regionsAvailability }));
+      })
+    );
+  }
+
   setSuggestedRegions(reservation: Reservation): void {
     this.filterSuggestedRegions$(reservation)
       .subscribe({
@@ -47,10 +74,6 @@ export class ReservationService {
           this.store.dispatch(setSuggestedRegions({ suggestedRegions }));
         }
       });
-  }
-
-  book(reservation: Reservation) {
-    this.store.dispatch(bookReservation({reservation}));
   }
 
   private filterSuggestedRegions$(reservation: Reservation): Observable<RegionAvailability[]> {

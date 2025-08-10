@@ -3,12 +3,18 @@
 
   &__action-btn {
     text-align: center;
-    margin: 3rem auto 0;
+    margin: 3rem auto;
+  }
+
+  &__card-container {
+    max-width: 700px;
+    margin: 0 auto;
   }
 
   &__description {
-    margin-top: 1.8rem;
     text-align: center;
+    max-width: 450px;
+    margin: 0 auto;
   }
 
   &__header {
@@ -16,6 +22,7 @@
     align-items: center;
     gap: 20px;
     justify-content: center;
+    padding: 2rem;
   }
 
   &__icon-container {

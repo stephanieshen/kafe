@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SuggestedRegion } from '../../../models/region.model';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { SuggestedRegion } from '../../../../../models/region.model';
 
 @Component({
   selector: 'app-region-selection',

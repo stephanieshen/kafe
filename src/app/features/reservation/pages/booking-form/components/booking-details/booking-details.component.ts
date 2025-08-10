@@ -1,14 +1,15 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { Timeslot } from '../../models/timeslot.model';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { generateTimeSlots } from '../../utils/generate-time-slots.util';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { RegionSelectionComponent } from './region-selection/region-selection.component';
-import { SuggestedRegion } from '../../models/region.model';
+import { SuggestedRegion } from '../../../../models/region.model';
+import { Timeslot } from '../../../../models/timeslot.model';
+import { generateTimeSlots } from '../../../../utils/generate-time-slots.util';
+
 
 @Component({
   selector: 'app-booking-details',
